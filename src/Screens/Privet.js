@@ -117,12 +117,12 @@ class Privet extends React.Component {
                                     <Typography>
                                         {a.content}
                                     </Typography>
-                                    <div className={'DeletButtonContainer'}>
-                                        <Button onClick={() => this.handleDelet(a)} variant="fab" color="secondary" aria-label="Delete">
-                                            <DeleteIcon />
-                                        </Button>
-                                    </div>
                                 </ExpansionPanelDetails>
+                                <div className={'DeletButtonContainer'}>
+                                    <Button onClick={() => this.handleDelet(a)} variant="fab" color="secondary" aria-label="Delete">
+                                        <DeleteIcon />
+                                    </Button>
+                                </div>
                             </ExpansionPanel>
                         )
                     })): (<div className={'AppSpinnerContainer'}><CircularProgress/></div>)}
