@@ -1,0 +1,45 @@
+.PublicLogoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.PublicLogo {
+    height: 80px;
+}
+
+.CardContainer {
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Card {
+    width: 345px;
+}
+
+.CardMedia {
+    height: 140px;
+}
+
+.TextField {
+    width: 100%;
+}
+
+.PannelContainer {
+    margin: 10px;
+}
+
+.AddButtonContainer {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+}
+
+.DeletButtonContainer {
+    text-align: right;
+    right: 0;
+    bottom: 0;
+}
