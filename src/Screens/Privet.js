@@ -80,7 +80,7 @@ class Privet extends React.Component {
             img: this.state.imgUrl,
             content: this.state.content,
         });
-        this.handleClose()
+        this.handleClose();
         this.setState({
             title: "",
             imgUrl: "",
@@ -90,6 +90,17 @@ class Privet extends React.Component {
 
     handleDelet = async (a) => {
         Fire.db.ref('data/' + a.key).remove()
+    };
+
+    fileSelect = (e) => {
+        let a = e.target.files[0];
+        Fire.store.ref().child("/images/" + a.name).put(a).then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+                this.setState({
+                    imgUrl: url
+                })
+            });
+        });
     };
 
     render() {
@@ -137,13 +148,9 @@ class Privet extends React.Component {
                                 onChange={this.handleChange('title')}
                                 margin="normal"
                             />
-                            <TextField
-                                className={'TextField'}
-                                label="Bild Url"
-                                value={this.state.imgUrl}
-                                onChange={this.handleChange('imgUrl')}
-                                margin="normal"
-                            />
+                            <Button variant="extendedFab" aria-label="Delete" style={{overflow: "none"}}>
+                                <input type={"file"} onChange={this.fileSelect}/>
+                            </Button>
                             <TextField
                                 className={'TextField'}
                                 label="Content"
@@ -168,6 +175,6 @@ class Privet extends React.Component {
 
         )
     };
-};
+}
 
 export default withMobileDialog()(Privet);

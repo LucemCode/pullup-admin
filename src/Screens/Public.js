@@ -88,7 +88,7 @@ class Public extends React.Component {
                             </form>
                         </CardContent>
                         <CardActions>
-                            <Button size="small" color="primary" onClick={this.onSubmit}>
+                            <Button type={"submit"} size="small" color="primary" onClick={this.onSubmit}>
                                 Login
                             </Button>
                             <CircularProgress style={{display: this.state.inProgress}} size={20} />
@@ -98,6 +98,6 @@ class Public extends React.Component {
             </div>
         )
     };
-};
+}
 
 export default Public;
