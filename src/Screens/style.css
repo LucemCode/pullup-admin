@@ -20,10 +20,6 @@
     width: 345px;
 }
 
-.CardMedia {
-    height: 140px;
-}
-
 .TextField {
     width: 100%;
 }
@@ -38,8 +34,12 @@
     bottom: 15px;
 }
 
-.DeletButtonContainer {
+.EditButtonContainer {
     text-align: right;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.EditButton {
+    margin: 5px;
 }

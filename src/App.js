@@ -19,6 +19,7 @@ class App extends React.Component{
     constructor(props){
         super(props);
         Fire.init();
+        window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
         this.state = {
             waitForServer: true,
