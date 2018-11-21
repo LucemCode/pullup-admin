@@ -81,22 +81,19 @@ class Privet extends React.Component {
     };
 
     handleAddSubmit = async () => {
+        let _state = this.state;
         if (this.state.title && this.state.content !== "") {
             this.setState({safeProgress: 1});
             await Fire.store.ref().child("/images/" + this.state.imgObjekt.name).put(this.state.imgObjekt).then((snapshot) => {
                 snapshot.ref.getDownloadURL().then((url) => {
-                    this.setState({
-                        imgUrl: url
+                    Fire.db.ref('data/').push({
+                        title: _state.title,
+                        date: Date.now(),
+                        img: url,
+                        content: _state.content,
                     })
                 });
-            }).then(
-                await Fire.db.ref('data/').push({
-                    title: this.state.title,
-                    date: Date.now(),
-                    img: this.state.imgUrl,
-                    content: this.state.content,
-                })
-            );
+            });
             this.setState({
                 addDialogOpen: false,
                 safeProgress: 0,
