@@ -23,7 +23,7 @@ class Public extends React.Component {
             error: false,
             inProgress: 'none',
         }
-    }
+    };
 
     handleChange = name => event => {
         this.setState({
@@ -92,6 +92,6 @@ class Public extends React.Component {
             </div>
         )
     };
-}
+};
 
 export default Public;
