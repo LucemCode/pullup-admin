@@ -1,3 +1,4 @@
+import './style.css';
 import React from 'react';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -14,11 +15,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 import snapshotToArray from '../Components/FirebaseDBSnapshotToArray';
-import './style.css';
 import Fire from '../Fire';
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 class Privet extends React.Component {
 
@@ -35,18 +35,32 @@ class Privet extends React.Component {
             key: "",
             title: "",
             imgUrl: "",
-            content: ""
-        }
-    }
+            content: "",
+            isAdmin: false
+        };
+    };
 
     componentWillMount = async () => {
-        await Fire.db.ref('data/').on('value', (snapshot) => {
+        await this.getBlogInfo();
+        await this.checkUserStatus();
+    };
+
+    checkUserStatus = () => {
+        Fire.db.ref('/users/' + Fire.auth.currentUser.uid).once('value', (snapshot) => {
+            this.setState({
+                isAdmin: snapshot.val().isAdmin,
+            });
+        });
+    };
+
+    getBlogInfo = () => {
+        Fire.db.ref('/data/').on('value', (snapshot) => {
             let arraySnapshot = snapshotToArray(snapshot);
             this.setState({
                 data: arraySnapshot,
                 ready: true,
             });
-        })
+        });
     };
 
     handleChange = name => event => {
@@ -62,7 +76,7 @@ class Privet extends React.Component {
             title: a.title,
             imgUrl: a.img,
             content: a.content
-        })
+        });
     };
 
     handleEditSubmit = async () => {
@@ -77,7 +91,7 @@ class Privet extends React.Component {
             imgUrl: "",
             content: "",
             key: ""
-        })
+        });
     };
 
     handleAddSubmit = async () => {
@@ -91,7 +105,7 @@ class Privet extends React.Component {
                         date: Date.now(),
                         img: url,
                         content: _state.content,
-                    })
+                    });
                 });
             });
             this.setState({
@@ -100,10 +114,10 @@ class Privet extends React.Component {
                 title: "",
                 imgUrl: "",
                 content: ""
-            })
+            });
         } else {
             alert("Bitte alle Felder ausfüllen!")
-        }
+        };
     };
 
     handleDelet = async (a) => {
@@ -113,7 +127,7 @@ class Privet extends React.Component {
     fileSelect = (e) => {
         this.setState({
             imgObjekt: e.target.files[0]
-        })
+        });
     };
 
     render() {
@@ -131,14 +145,14 @@ class Privet extends React.Component {
                                         {a.content}
                                     </Typography>
                                 </ExpansionPanelDetails>
-                                <div className={'EditButtonContainer'}>
+                                {this.state.isAdmin ? <div className={'EditButtonContainer'}>
                                     <Button style={{margin: 5, background: 'green', color: 'white'}} onClick={() => this.handleEdit(a)} variant="fab" aria-label="Delete">
                                         <CreateIcon />
                                     </Button>
                                     <Button style={{margin: 5}} onClick={() => this.handleDelet(a)} variant="fab" color="secondary" aria-label="Edit">
                                         <DeleteIcon />
                                     </Button>
-                                </div>
+                                </div> : null}
                             </ExpansionPanel>
                         )
                     })): (<div className={'AppSpinnerContainer'}><CircularProgress/></div>)}
@@ -185,11 +199,11 @@ class Privet extends React.Component {
                 {/*
                     Add Dialog
                 */}
-                <div className={'AddButtonContainer'}>
+                {this.state.isAdmin ? <div className={'AddButtonContainer'}>
                     <Button onClick={() => this.setState({addDialogOpen: true})} variant="fab" color="primary" aria-label="Add" className={'AddButton'}>
                         <AddIcon />
                     </Button>
-                </div>
+                </div> : null}
                 <Dialog
                     fullScreen={this.props.fullScreen}
                     open={this.state.addDialogOpen}

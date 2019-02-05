@@ -25,7 +25,7 @@ class App extends React.Component{
             waitForServer: true,
             isAuth: false,
             anchorEl: null
-        }
+        };
     }
 
     componentDidMount = () => {
@@ -35,7 +35,7 @@ class App extends React.Component{
                 this.setState({isAuth: true})
             } else {
                 this.setState({isAuth: false})
-            }
+            };
         });
     };
 
@@ -66,7 +66,7 @@ class App extends React.Component{
                     <AppBar position="fixed" style={{background: '#333', flexGrow: 1}}>
                         <Toolbar>
                             <Typography variant="h6" color="inherit" style={{flexGrow: 1}}>
-                                PullUp Admin
+                                PullUp
                             </Typography>
                             {this.state.isAuth && (
                                 <div>
@@ -108,7 +108,7 @@ class App extends React.Component{
                 </div>
             </div>
         )
-    }
-}
+    };
+};
 
 export default App;
